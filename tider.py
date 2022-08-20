@@ -27,10 +27,6 @@ DEFAULT_CONFIG = '''
 update_period = 1000  # in microseconds
 offline_timeout = 300  # in seconds
 min_duration = 60  # in seconds
-break_symbol = '*'
-break_period = 600  # in seconds
-work_period = 3000  # in seconds
-overwork_period = 300  # in seconds
 hide_tray = True
 hide_win = False
 sqlite_manager = 'sqlite3'
@@ -428,34 +424,6 @@ class State:
         ctx = namedtuple('Ctx', ctx.keys())(**ctx)
         self.text = self.conf.text_hook(ctx)
 
-        # Handle overwork
-        if self.conf.overwork_period and self.active:
-            if not last_working.need_break:
-                self._last_overwork = None
-            else:
-                overtime = int(last_working.period - self.conf.work_period)
-
-                timeout = 0
-                if self._last_overwork:
-                    timeout = time.time() - self._last_overwork
-
-                if timeout and timeout <= self.conf.overwork_period:
-                    return
-
-                self._last_overwork = time.time()
-
-                f_seconds = lambda v: '<b>%s</b>' % str_seconds(v)
-                message = 'Working: ' + f_seconds(last_working.period)
-                if overtime:
-                    message += '\nOverworking: ' + f_seconds(overtime)
-
-                cmd = 'notify-send -t %s %s "Take a break!" "%s"' % (
-                    int(self.conf.overwork_period * 500),
-                    '-u critical' if overtime > self.conf.work_period else '',
-                    message
-                )
-                sp.call(cmd, shell=True)
-
     def get_stats(self):
         if not self.start:
             status = ('<b>Tider is disabled</b>')
@@ -483,10 +451,6 @@ class State:
                 last_working += ' from {}'.format(last_w.started_str)
             else:
                 last_working += ' till {}'.format(last_w.ended_str)
-            if self.active and last_w.need_break:
-                last_working += '\n  <b>Need a break!</b>'
-            elif not self.active and not last_w.need_break:
-                last_working += '\n  <b>Can work again!</b>'
             result += [last_working]
 
         result += [get_report(self.conf)]
