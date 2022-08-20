@@ -18,7 +18,7 @@ import gi
 gi.require_version('Gdk', '3.0')  # noqa
 gi.require_version('Gtk', '3.0')  # noqa
 
-from gi.repository import Gdk, Gtk, GObject
+from gi.repository import Gdk, Gtk, GObject, GLib
 
 GObject.threads_init()
 
@@ -82,7 +82,7 @@ class Gui:
             return True
 
         update()
-        GObject.timeout_add(conf.update_period, update)
+        GLib.timeout_add(conf.update_period, update)
 
         # Start GTK loop
         server = Thread(target=self.serve, args=(conf.socket,))
