@@ -158,16 +158,16 @@ class Gui:
         return win
 
     def create_menu(self):
-        off = Gtk.ImageMenuItem.new_from_stock(Gtk.STOCK_MEDIA_STOP, None)
+        off = Gtk.ImageMenuItem.new()
         off.set_label('Switch off')
         off.connect('activate', lambda w: self.state.disable())
 
-        target = Gtk.ImageMenuItem.new_from_stock(Gtk.STOCK_OK, None)
+        target = Gtk.ImageMenuItem.new()
         target.set_label('Set activity')
         target.connect('activate', lambda w: self.pub_target())
         target.show()
 
-        stat = Gtk.ImageMenuItem.new_from_stock(Gtk.STOCK_PAGE_SETUP, None)
+        stat = Gtk.ImageMenuItem.new()
         stat.set_label('Show statistics')
         stat.connect('activate', lambda w: self.pub_report())
         stat.show()
@@ -175,7 +175,7 @@ class Gui:
         separator = Gtk.SeparatorMenuItem()
         separator.show()
 
-        quit = Gtk.ImageMenuItem.new_from_stock(Gtk.STOCK_QUIT, None)
+        quit = Gtk.ImageMenuItem.new()
         quit.connect('activate', lambda w: self.pub_quit())
         quit.show()
 
