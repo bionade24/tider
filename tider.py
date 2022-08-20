@@ -20,8 +20,6 @@ gi.require_version('Gtk', '3.0')  # noqa
 
 from gi.repository import Gdk, Gtk, GObject, GLib
 
-GObject.threads_init()
-
 OK = 'OK'
 RELOAD = 100
 SQL_DATE = '%Y-%m-%d'
