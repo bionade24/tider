@@ -1,5 +1,3 @@
-# Maintainer: naspeh <naspeh@ya.ru>
-
 pkgname=tider-git
 pkgver=0.0.0
 pkgrel=11
@@ -10,7 +8,7 @@ license=('BSD')
 depends=('python-gobject' 'gtk3' 'libnotify')
 makedepends=('git')
 provides=('tider')
-source=("$pkgname"::'git://github.com/naspeh/tider.git')
+source=("$pkgname"::'git+file:///home/oskar/workspace/tider')
 sha256sums=('SKIP')
 
 pkgver() {
